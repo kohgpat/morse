@@ -1,0 +1,83 @@
+#!/usr/bin/env ruby
+
+module Morse
+  class Dictionary
+    attr_reader :space_between_letters, :space_between_words
+
+    def initialize
+      @hash = {
+        "a" => "* ===",
+        "b" => "=== * * *",
+        "c" => "=== * === *",
+        "d" => "=== * *",
+        "e" => "*",
+        "f" => "* * === *",
+        "g" => "=== === *",
+        "h" => "* * * *",
+        "i" => "* *",
+        "j" => "* === === ===",
+        "k" => "=== * ===",
+        "l" => "* === * *",
+        "m" => "=== ===",
+        "n" => "=== *",
+        "o" => "=== === ===",
+        "p" => "* === === *",
+        "q" => "=== === * ===",
+        "r" => "* === *",
+        "s" => "* * *",
+        "t" => "===",
+        "u" => "* * ===",
+        "v" => "* * * ===",
+        "w" => "* === ===",
+        "x" => "=== * * ===",
+        "y" => "=== * === ===",
+        "z" => "=== === * *",
+        "1" => "* === === === ===",
+        "2" => "* * === === ===",
+        "3" => "* * * === === ===",
+        "4" => "* * * * === ===",
+        "5" => "* * * * *",
+        "6" => "=== * * * *",
+        "7" => "=== === * * *",
+        "8" => "=== === === * *",
+        "9" => "=== === === === *",
+        "0" => "=== === === === ==="
+      }
+
+      @space_between_letters = " "
+      @space_between_words = "       "
+    end
+
+    def get(character)
+      return @hash[character]
+    end
+  end
+
+  class Encoder
+    def initialize
+      @dictionary = Dictionary.new
+    end
+
+    def encode(message)
+      message.each do |word|
+        word.each_char.each do |char|
+          print @dictionary.get(char)
+          print @dictionary.space_between_letters
+        end
+
+        print @dictionary.space_between_words
+      end
+
+      puts
+    end
+  end
+
+  class Cli
+    def self.start(message)
+      encoder = Encoder.new
+      encoder.encode(message)
+    end
+  end
+end
+
+Morse::Cli.start(ARGV)
